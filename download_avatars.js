@@ -1,5 +1,7 @@
 var request = require('request');
 var token = require('./secrets');
+var fs = require('fs');
+var request =require('request');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
@@ -30,6 +32,36 @@ getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", returnMe);
 });
+
+function downloadImageByURL(url, filePath) {
+  //I will access a URL and then I will download the imaf=ge from it
+  request.get(url)
+  .on('error', function (err){
+    console.log('Danger Will Robinson! ----- ', err);
+  })
+  .on('response', function(response){
+    console.log(response.statusMessage)
+    console.log(response.headers['content-type'])
+  })
+  .pipe(fs.createWriteStream(filePath));
+}
+
+downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "./avatars/kvirani.jpg");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
