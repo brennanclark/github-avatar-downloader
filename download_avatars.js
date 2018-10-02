@@ -23,19 +23,24 @@ function getRepoContributors(repoOwner, repoName, cb){
 
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+var input1 = process.argv[2];
+var input2 = process.argv[3];
 
-  console.log("Errors:", err);
-  console.log("Result:", result);
+if (input1 != undefined && input2 != undefined) {
+  getRepoContributors(input1, input2, function(err, result) {
 
-  result.forEach(function(element){
-    var url = element.avatar_url;
-    var filePath ='avatars/' + element.login + '.jpg'
-    downloadImageByURL(url,filePath);
+    console.log("Errors:", err);
+
+    result.forEach(function(element){
+      var url = element.avatar_url;
+      var filePath ='avatars/' + element.login + '.jpg'
+      downloadImageByURL(url,filePath);
   });
 
-});
-
+  });
+} else {
+  console.log("Ya dun goofed! You need to give me the values! \n May I suggest 'Jquery' perhaps?")
+}
 
 function downloadImageByURL(url, filePath) {
   //I will access a URL and then I will download the imaf=ge from it
@@ -49,12 +54,6 @@ function downloadImageByURL(url, filePath) {
   })
   .pipe(fs.createWriteStream(filePath));
 }
-
-
-
-
-
-
 
 
 
